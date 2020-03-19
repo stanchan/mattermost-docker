@@ -209,6 +209,10 @@ docker stack deploy -c contrib/swarm/docker-stack.yml mattermost
 * Do not modify the Listen Address in Service Settings.
 * Rarely `app` container fails to start because of "connection refused" to
   database. Workaround: Restart the container.
+* To set the localtime in the container, run the following:
+```
+echo "TZ=$(ls -la /etc/localtime | cut -d/ -f8-9)" >> .env
+```
 
 ## More information
 

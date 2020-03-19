@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.11.3
 
 # Some ENV variables
 ENV PATH="/mattermost/bin:${PATH}"
@@ -24,6 +24,7 @@ RUN apk add --no-cache \
 	netcat-openbsd \
 	xmlsec-dev \
 	tzdata \
+	bash \
 	&& rm -rf /tmp/*
 
 # Get Mattermost
