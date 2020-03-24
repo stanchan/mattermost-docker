@@ -1,22 +1,15 @@
 version: "3"
-
 services:
-
   db:
     build: db
-    read_only: true
     restart: unless-stopped
     volumes:
-      - ./volumes/db/var/lib/postgresql/data:/var/lib/postgresql/data
+      - ./volumes/db/mysql/data:/var/lib/mysql
     environment:
-      - POSTGRES_USER=mmuser
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=mattermost
-    # uncomment the following to enable backup
-    #  - AWS_ACCESS_KEY_ID=XXXX
-    #  - AWS_SECRET_ACCESS_KEY=XXXX
-    #  - WALE_S3_PREFIX=s3://BUCKET_NAME/PATH
-    #  - AWS_REGION=us-east-1
+      - MYSQL_ROOT_PASSWORD=somepassword
+      - MYSQL_DATABASE=mattermost
+      - MYSQL_USER=mmuser
+      - MYSQL_PASSWORD=password
 
   app:
     build:
@@ -44,7 +37,8 @@ services:
 
       # use the credentials you've set above, in the format:
       # MM_SQLSETTINGS_DATASOURCE=postgres://${MM_USERNAME}:${MM_PASSWORD}@db:5432/${MM_DBNAME}?sslmode=disable&connect_timeout=10
-      - MM_SQLSETTINGS_DATASOURCE=postgres://mmuser:password@db:5432/mattermost?sslmode=disable&connect_timeout=10
+      # - MM_SQLSETTINGS_DATASOURCE=postgres://mmuser:password@db:5432/mattermost?sslmode=disable&connect_timeout=10
+      - MM_SQLSETTINGS_DATASOURCE=mmuser:password@tcp(db:3306)/mattermost?charset=utf8mb4,utf8&readTimeout=20s&writeTimeout=20s&timeout=20s
 
       # in case your config is not in default location
       #- MM_CONFIG=/mattermost/config/config.json

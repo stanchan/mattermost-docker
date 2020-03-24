@@ -10,22 +10,21 @@ ARG PUID=2000
 ARG PGID=2000
 ARG MM_BINARY=
 
-
 # Install some needed packages
 RUN apk add --no-cache \
-	ca-certificates \
-	curl \
-	jq \
-	libc6-compat \
-	libffi-dev \
-    libcap \
-	linux-headers \
-	mailcap \
-	netcat-openbsd \
-	xmlsec-dev \
-	tzdata \
-	bash \
-	&& rm -rf /tmp/*
+			ca-certificates \
+			curl \
+			jq \
+			libc6-compat \
+			libffi-dev \
+			libcap \
+			linux-headers \
+			mailcap \
+			netcat-openbsd \
+			xmlsec-dev \
+			tzdata \
+			bash \
+	  && rm -rf /tmp/*
 
 # Get Mattermost
 RUN mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins \
@@ -42,7 +41,7 @@ RUN mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins \
 USER mattermost
 
 #Healthcheck to make sure container is ready
-HEALTHCHECK CMD curl --fail http://localhost:8000 || exit 1
+HEALTHCHECK CMD curl --fail http://127.0.0.1:8000 || exit 1
 
 # Configure entrypoint and command
 COPY entrypoint.sh /
