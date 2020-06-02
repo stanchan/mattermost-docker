@@ -10,6 +10,14 @@ services:
       - MYSQL_DATABASE=mattermost
       - MYSQL_USER=mmuser
       - MYSQL_PASSWORD=password
+    ports:
+      - 3306:3306
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8001:8080
 
   app:
     build:
